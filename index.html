@@ -21,12 +21,9 @@
       --dark-brown: #3d2f24;
       --text: #2c2218;
       --text-muted: #7a6a5e;
-      --grain-opacity: 0.035;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -37,149 +34,120 @@
       overflow-x: hidden;
     }
 
-    /* Grain texture overlay */
+    /* Grain texture */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-      opacity: var(--grain-opacity);
+      opacity: 0.03;
       pointer-events: none;
       z-index: 999;
     }
 
-    /* ── HERO ── */
+    /* ── HERO: фото на весь экран, текст поверх ── */
     .hero {
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 80px 24px 60px;
+      height: 100svh;
+      min-height: 560px;
       position: relative;
-      background-color: var(--cream);
+      display: flex;
+      align-items: flex-end;
       overflow: hidden;
     }
 
-    .hero-bg {
+    .hero-photo {
       position: absolute;
       inset: 0;
       background-image: url('telegram-cloud-photo-size-2-5429423985042067560-w.jpg');
       background-size: cover;
-      background-position: center 30%;
-      opacity: 0.18;
-      filter: sepia(30%) saturate(80%);
+      background-position: center 25%;
+      filter: sepia(15%) saturate(85%);
     }
 
-    .hero-bg::after {
+    /* Градиент снизу — текст читается на фото */
+    .hero-photo::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at center, transparent 30%, var(--cream) 75%);
+      background: linear-gradient(
+        to top,
+        rgba(30, 18, 10, 0.82) 0%,
+        rgba(30, 18, 10, 0.35) 45%,
+        transparent 70%
+      );
     }
 
     .hero-content {
       position: relative;
       z-index: 1;
-      max-width: 560px;
+      padding: 0 32px 48px;
+      max-width: 680px;
     }
 
     .hero-eyebrow {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 400;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--brown);
-      margin-bottom: 28px;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 12px;
     }
 
     .hero-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(48px, 11vw, 88px);
+      font-size: clamp(44px, 10vw, 80px);
       font-weight: 300;
-      line-height: 1.05;
-      color: var(--dark-brown);
-      margin-bottom: 20px;
+      line-height: 1.0;
+      color: #fff;
+      margin-bottom: 12px;
       letter-spacing: -0.01em;
     }
 
-    .hero-title em {
-      font-style: italic;
-    }
+    .hero-title em { font-style: italic; }
 
     .hero-subtitle {
-      font-size: 15px;
-      color: var(--text-muted);
-      font-weight: 300;
-      letter-spacing: 0.02em;
-      margin-bottom: 48px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
       font-style: italic;
+      margin-bottom: 28px;
     }
 
     .hero-cta {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      background-color: var(--dark-brown);
-      color: var(--warm-white);
+      gap: 8px;
+      background-color: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.35);
+      backdrop-filter: blur(6px);
+      color: #fff;
       text-decoration: none;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 400;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      padding: 16px 36px;
+      padding: 13px 28px;
       border-radius: 2px;
-      transition: background 0.25s ease, transform 0.2s ease;
+      transition: background 0.25s ease, border-color 0.25s ease;
     }
 
     .hero-cta:hover {
-      background-color: #5a3d2b;
-      transform: translateY(-1px);
-    }
-
-    .hero-cta svg {
-      flex-shrink: 0;
-    }
-
-    .scroll-hint {
-      position: absolute;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      color: var(--brown);
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      opacity: 0.6;
-    }
-
-    .scroll-hint::after {
-      content: '';
-      width: 1px;
-      height: 32px;
-      background: var(--brown);
-      opacity: 0.5;
+      background-color: rgba(255,255,255,0.25);
+      border-color: rgba(255,255,255,0.6);
     }
 
     /* ── ABOUT ── */
     .about {
-      padding: 96px 24px;
-      max-width: 640px;
+      padding: 48px 24px;
+      max-width: 600px;
       margin: 0 auto;
       text-align: center;
     }
 
     .about p {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(22px, 4vw, 28px);
+      font-size: clamp(20px, 3.5vw, 26px);
       font-weight: 300;
-      line-height: 1.6;
+      line-height: 1.55;
       color: var(--dark-brown);
     }
 
@@ -196,12 +164,35 @@
       text-transform: uppercase;
       color: var(--brown);
       text-align: center;
-      margin-bottom: 48px;
+      margin-bottom: 24px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      max-width: 360px;
+      margin: 0 auto 24px;
+      padding: 0 24px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--sand);
+    }
+
+    .divider span {
+      font-size: 16px;
+      opacity: 0.4;
     }
 
     /* ── RUBRICS ── */
     .rubrics {
-      padding: 80px 24px;
+      padding: 40px 24px;
       background-color: var(--cream);
     }
 
@@ -215,53 +206,57 @@
 
     .rubric-card {
       background: var(--warm-white);
-      padding: 44px 36px;
-      position: relative;
       overflow: hidden;
       transition: background 0.3s ease;
+      display: flex;
+      flex-direction: column;
     }
 
-    .rubric-card:hover {
-      background: #f0e9de;
+    .rubric-card:hover { background: #f0e9de; }
+
+    .rubric-card:hover .rubric-photo {
+      transform: scale(1.04);
+      filter: sepia(4%) saturate(95%);
     }
 
-    .rubric-icon {
-      font-size: 28px;
-      margin-bottom: 20px;
+    .rubric-photo-wrap {
+      overflow: hidden;
+      height: 200px;
+      flex-shrink: 0;
+    }
+
+    .rubric-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
       display: block;
+      filter: sepia(10%) saturate(88%) contrast(1.02);
+      transition: transform 0.5s ease, filter 0.5s ease;
+    }
+
+    .rubric-body {
+      padding: 20px 22px 24px;
     }
 
     .rubric-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 400;
       color: var(--dark-brown);
-      margin-bottom: 10px;
+      margin-bottom: 6px;
       line-height: 1.2;
     }
 
     .rubric-desc {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-muted);
-      line-height: 1.7;
-    }
-
-    .rubric-card::after {
-      content: attr(data-num);
-      position: absolute;
-      bottom: 16px;
-      right: 20px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 64px;
-      font-weight: 300;
-      color: var(--sand);
-      line-height: 1;
-      pointer-events: none;
+      line-height: 1.65;
     }
 
     /* ── POLAROIDS ── */
     .polaroids {
-      padding: 96px 24px;
+      padding: 48px 24px;
       background-color: var(--warm-white);
     }
 
@@ -270,32 +265,32 @@
       flex-wrap: wrap;
       justify-content: center;
       align-items: flex-start;
-      gap: 40px 32px;
+      gap: 32px 24px;
       max-width: 960px;
       margin: 0 auto;
     }
 
     .polaroid {
       background: #fff;
-      padding: 12px 12px 48px;
+      padding: 10px 10px 42px;
       box-shadow:
         0 2px 8px rgba(61,47,36,0.10),
-        0 8px 32px rgba(61,47,36,0.08);
+        0 8px 28px rgba(61,47,36,0.08);
       flex: 0 0 auto;
-      width: clamp(220px, 36vw, 280px);
+      width: clamp(200px, 32vw, 260px);
       position: relative;
       transition: transform 0.35s ease, box-shadow 0.35s ease;
     }
 
     .polaroid:nth-child(1) { transform: rotate(-2.5deg); }
-    .polaroid:nth-child(2) { transform: rotate(1.8deg) translateY(12px); }
+    .polaroid:nth-child(2) { transform: rotate(1.8deg) translateY(10px); }
     .polaroid:nth-child(3) { transform: rotate(-1.2deg); }
 
     .polaroid:hover {
-      transform: rotate(0deg) translateY(-6px) scale(1.02) !important;
+      transform: rotate(0deg) translateY(-5px) scale(1.02) !important;
       box-shadow:
         0 6px 20px rgba(61,47,36,0.14),
-        0 20px 56px rgba(61,47,36,0.12);
+        0 18px 48px rgba(61,47,36,0.12);
       z-index: 10;
     }
 
@@ -309,33 +304,28 @@
 
     .polaroid-caption {
       position: absolute;
-      bottom: 10px;
-      left: 12px;
-      right: 12px;
+      bottom: 9px;
+      left: 10px;
+      right: 10px;
       text-align: center;
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text-muted);
-      letter-spacing: 0.02em;
     }
 
     /* ── GALLERY ── */
     .gallery {
-      padding: 96px 0;
+      padding: 48px 0;
       background-color: var(--cream);
     }
 
-    .gallery .section-label {
-      padding: 0 24px;
-    }
+    .gallery .section-label { padding: 0 24px; }
 
-    /* Masonry-style grid of film photos */
     .film-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: auto auto;
-      gap: 8px;
+      gap: 3px;
       padding: 0 24px;
       max-width: 1100px;
       margin: 0 auto;
@@ -344,24 +334,7 @@
     .film-frame {
       position: relative;
       overflow: hidden;
-    }
-
-    .film-frame:nth-child(1) {
-      grid-column: 1 / 2;
-      grid-row: 1 / 3;
-      min-height: 520px;
-    }
-
-    .film-frame:nth-child(2) {
-      grid-column: 2 / 3;
-      grid-row: 1 / 3;
-      min-height: 520px;
-    }
-
-    .film-frame:nth-child(3) {
-      grid-column: 3 / 4;
-      grid-row: 1 / 3;
-      min-height: 520px;
+      height: 420px;
     }
 
     .film-frame img {
@@ -370,20 +343,16 @@
       object-fit: cover;
       display: block;
       filter: sepia(8%) saturate(90%) contrast(1.02);
-      transition: transform 0.5s ease, filter 0.5s ease;
+      transition: transform 0.5s ease;
     }
 
-    .film-frame:hover img {
-      transform: scale(1.03);
-      filter: sepia(4%) saturate(95%) contrast(1.04);
-    }
+    .film-frame:hover img { transform: scale(1.04); }
 
-    /* Film border effect */
     .film-frame::before {
       content: '';
       position: absolute;
       inset: 0;
-      box-shadow: inset 0 0 40px rgba(20, 10, 5, 0.22);
+      box-shadow: inset 0 0 32px rgba(20,10,5,0.20);
       z-index: 1;
       pointer-events: none;
     }
@@ -393,25 +362,23 @@
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 28px 14px 12px;
+      padding: 24px 12px 10px;
       background: linear-gradient(to top, rgba(30,18,10,0.55), transparent);
-      font-size: 11px;
-      color: rgba(255,255,255,0.82);
-      letter-spacing: 0.1em;
+      font-size: 10px;
+      color: rgba(255,255,255,0.80);
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       z-index: 2;
     }
 
-    /* Mobile: strip */
     @media (max-width: 640px) {
       .film-grid {
         display: flex;
-        gap: 8px;
+        gap: 3px;
         overflow-x: auto;
         scrollbar-width: none;
         -ms-overflow-style: none;
         scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
         padding: 0 24px;
       }
 
@@ -419,80 +386,71 @@
 
       .film-frame {
         flex: 0 0 auto;
-        width: 72vw;
-        aspect-ratio: 2/3;
+        width: 70vw;
+        height: 300px;
         scroll-snap-align: start;
-      }
-
-      .film-frame:nth-child(1),
-      .film-frame:nth-child(2),
-      .film-frame:nth-child(3) {
-        grid-column: auto;
-        grid-row: auto;
       }
     }
 
     /* ── SUBSCRIBE ── */
     .subscribe {
-      padding: 96px 24px;
-      background-color: var(--cream);
+      padding: 48px 24px;
+      background-color: var(--warm-white);
       text-align: center;
     }
 
     .subscribe-inner {
-      max-width: 480px;
+      max-width: 440px;
       margin: 0 auto;
     }
 
     .subscribe h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(34px, 7vw, 52px);
+      font-size: clamp(32px, 6vw, 48px);
       font-weight: 300;
-      line-height: 1.15;
+      line-height: 1.1;
       color: var(--dark-brown);
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
-    .subscribe h2 em {
-      font-style: italic;
-    }
+    .subscribe h2 em { font-style: italic; }
 
     .subscribe p {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text-muted);
-      margin-bottom: 40px;
-      line-height: 1.8;
+      margin-bottom: 28px;
+      line-height: 1.75;
     }
 
     .subscribe-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       background-color: var(--dark-brown);
       color: var(--warm-white);
       text-decoration: none;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 400;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 20px 48px;
+      padding: 17px 40px;
       border-radius: 2px;
       width: 100%;
-      max-width: 340px;
+      max-width: 320px;
       transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
-      box-shadow: 0 4px 24px rgba(61, 47, 36, 0.15);
+      box-shadow: 0 4px 20px rgba(61,47,36,0.15);
     }
 
     .subscribe-btn:hover {
       background-color: #4a3020;
       transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(61, 47, 36, 0.22);
+      box-shadow: 0 8px 28px rgba(61,47,36,0.22);
     }
 
     .subscribe-handle {
-      margin-top: 20px;
-      font-size: 12px;
+      margin-top: 16px;
+      font-size: 11px;
       color: var(--text-muted);
       letter-spacing: 0.08em;
     }
@@ -502,104 +460,58 @@
       text-decoration: none;
     }
 
-    .subscribe-handle a:hover {
-      text-decoration: underline;
-    }
+    .subscribe-handle a:hover { text-decoration: underline; }
 
     /* ── FOOTER ── */
     footer {
-      padding: 40px 24px;
+      padding: 24px;
       border-top: 1px solid var(--sand);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       text-align: center;
     }
 
     .footer-logo {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 300;
       color: var(--dark-brown);
-      letter-spacing: 0.03em;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
     }
 
     .footer-links a {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
       color: var(--text-muted);
       text-decoration: none;
       transition: color 0.2s;
     }
 
-    .footer-links a:hover {
-      color: var(--brown);
-    }
+    .footer-links a:hover { color: var(--brown); }
 
     .footer-copy {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--sand);
-      margin-top: 4px;
-    }
-
-    /* ── DIVIDER ── */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      max-width: 400px;
-      margin: 0 auto 48px;
-      padding: 0 24px;
-    }
-
-    .divider::before,
-    .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--sand);
-    }
-
-    .divider span {
-      font-size: 18px;
-      opacity: 0.4;
     }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       .rubrics-grid {
         grid-template-columns: 1fr;
-        gap: 2px;
       }
 
-      .rubric-card {
-        padding: 36px 28px;
-      }
+      .subscribe-btn { max-width: 100%; }
 
-      .subscribe-btn {
-        max-width: 100%;
-      }
-
-      .polaroid {
-        width: clamp(200px, 68vw, 260px);
-      }
-
+      .polaroid { width: clamp(190px, 62vw, 240px); }
       .polaroid:nth-child(1) { transform: rotate(-2deg); }
       .polaroid:nth-child(2) { transform: rotate(1.5deg) translateY(8px); }
       .polaroid:nth-child(3) { transform: rotate(-1deg); }
     }
 
     @media (min-width: 900px) {
-      .rubrics-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
+      .rubrics-grid { grid-template-columns: repeat(4, 1fr); }
     }
   </style>
 </head>
@@ -607,19 +519,18 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg"></div>
+    <div class="hero-photo"></div>
     <div class="hero-content">
       <p class="hero-eyebrow">Телеграм-канал</p>
       <h1 class="hero-title">Жизнь<br><em>после</em><br>работы</h1>
       <p class="hero-subtitle">рассказываю чем занимаюсь помимо работы</p>
       <a href="https://t.me/life_after_job" class="hero-cta" target="_blank" rel="noopener">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/>
         </svg>
         Подписаться
       </a>
     </div>
-    <div class="scroll-hint">листай</div>
   </section>
 
   <!-- ABOUT -->
@@ -632,29 +543,63 @@
   <!-- RUBRICS -->
   <section class="rubrics">
     <p class="section-label">рубрики</p>
-
     <div class="divider"><span>✦</span></div>
 
     <div class="rubrics-grid">
-      <div class="rubric-card" data-num="01">
-        <span class="rubric-icon">📷</span>
-        <h3 class="rubric-name">Плёночные&nbsp;фото</h3>
-        <p class="rubric-desc">Снимаю на плёнку — улицы, закаты, случайные кадры. Тихая медленная фотография</p>
+      <div class="rubric-card">
+        <div class="rubric-photo-wrap">
+          <img class="rubric-photo"
+            src="telegram-cloud-photo-size-2-5429423985042067560-w.jpg"
+            alt="Плёночные фото"
+            loading="lazy"
+          >
+        </div>
+        <div class="rubric-body">
+          <h3 class="rubric-name">Плёночные фото</h3>
+          <p class="rubric-desc">Снимаю на плёнку — улицы, закаты, случайные кадры. Тихая медленная фотография</p>
+        </div>
       </div>
-      <div class="rubric-card" data-num="02">
-        <span class="rubric-icon">🖼</span>
-        <h3 class="rubric-name">Выставки и мероприятия</h3>
-        <p class="rubric-desc">Хожу на выставки, лекции, в музеи. Делюсь тем, что зацепило</p>
+
+      <div class="rubric-card">
+        <div class="rubric-photo-wrap">
+          <img class="rubric-photo"
+            src="Снимок экрана 2026-03-23 в 15.23.13.png"
+            alt="Выставки и мероприятия"
+            loading="lazy"
+          >
+        </div>
+        <div class="rubric-body">
+          <h3 class="rubric-name">Выставки и мероприятия</h3>
+          <p class="rubric-desc">Хожу на выставки, лекции, в музеи. Делюсь тем, что зацепило</p>
+        </div>
       </div>
-      <div class="rubric-card" data-num="03">
-        <span class="rubric-icon">✈️</span>
-        <h3 class="rubric-name">Путешествия</h3>
-        <p class="rubric-desc">Заметки из поездок — близких и дальних. Места, атмосфера, детали</p>
+
+      <div class="rubric-card">
+        <div class="rubric-photo-wrap">
+          <img class="rubric-photo"
+            src="telegram-cloud-photo-size-2-5429423985042067565-w.jpg"
+            alt="Путешествия"
+            loading="lazy"
+          >
+        </div>
+        <div class="rubric-body">
+          <h3 class="rubric-name">Путешествия</h3>
+          <p class="rubric-desc">Заметки из поездок — близких и дальних. Места, атмосфера, детали</p>
+        </div>
       </div>
-      <div class="rubric-card" data-num="04">
-        <span class="rubric-icon">💭</span>
-        <h3 class="rubric-name">Забавные&nbsp;мысли</h3>
-        <p class="rubric-desc">То, что пришло в голову в метро или перед сном и не поместилось в никуда</p>
+
+      <div class="rubric-card">
+        <div class="rubric-photo-wrap">
+          <img class="rubric-photo"
+            src="Снимок экрана 2026-03-23 в 15.22.53.png"
+            alt="Забавные мысли"
+            loading="lazy"
+          >
+        </div>
+        <div class="rubric-body">
+          <h3 class="rubric-name">Забавные мысли</h3>
+          <p class="rubric-desc">То, что пришло в голову в метро или перед сном и не поместилось в никуда</p>
+        </div>
       </div>
     </div>
   </section>
@@ -728,7 +673,7 @@
       <h2>Приходи<br><em>читать</em></h2>
       <p>Посты выходят без расписания — когда есть что сказать. Без спама, только живое</p>
       <a href="https://t.me/life_after_job" class="subscribe-btn" target="_blank" rel="noopener">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/>
         </svg>
         Подписаться в Telegram
