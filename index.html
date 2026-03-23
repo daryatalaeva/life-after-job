@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Жизнь после работы</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400&display=swap');
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --cream: #f5f0e8;
+      --warm-white: #faf7f2;
+      --sand: #e8dece;
+      --brown: #8a6f5a;
+      --dark-brown: #3d2f24;
+      --text: #2c2218;
+      --text-muted: #7a6a5e;
+      --grain-opacity: 0.035;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--warm-white);
+      color: var(--text);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: var(--grain-opacity);
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+      position: relative;
+      background-color: var(--cream);
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('telegram-cloud-photo-size-2-5429423985042067560-w.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      opacity: 0.18;
+      filter: sepia(30%) saturate(80%);
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 30%, var(--cream) 75%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 560px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: 28px;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 11vw, 88px);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--dark-brown);
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-title em {
+      font-style: italic;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      margin-bottom: 48px;
+      font-style: italic;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--dark-brown);
+      color: var(--warm-white);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      border-radius: 2px;
+      transition: background 0.25s ease, transform 0.2s ease;
+    }
+
+    .hero-cta:hover {
+      background-color: #5a3d2b;
+      transform: translateY(-1px);
+    }
+
+    .hero-cta svg {
+      flex-shrink: 0;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--brown);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+
+    .scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 32px;
+      background: var(--brown);
+      opacity: 0.5;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: 96px 24px;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 4vw, 28px);
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--dark-brown);
+    }
+
+    .about p em {
+      font-style: italic;
+      color: var(--brown);
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brown);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    /* ── RUBRICS ── */
+    .rubrics {
+      padding: 80px 24px;
+      background-color: var(--cream);
+    }
+
+    .rubrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .rubric-card {
+      background: var(--warm-white);
+      padding: 44px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s ease;
+    }
+
+    .rubric-card:hover {
+      background: #f0e9de;
+    }
+
+    .rubric-icon {
+      font-size: 28px;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .rubric-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--dark-brown);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .rubric-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .rubric-card::after {
+      content: attr(data-num);
+      position: absolute;
+      bottom: 16px;
+      right: 20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 64px;
+      font-weight: 300;
+      color: var(--sand);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    /* ── GALLERY ── */
+    .gallery {
+      padding: 96px 0;
+    }
+
+    .gallery .section-label {
+      padding: 0 24px;
+    }
+
+    .gallery-strip {
+      display: flex;
+      gap: 12px;
+      padding: 0 24px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .gallery-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .film-frame {
+      flex: 0 0 auto;
+      width: clamp(260px, 42vw, 380px);
+      scroll-snap-align: start;
+      position: relative;
+    }
+
+    .film-frame img {
+      width: 100%;
+      aspect-ratio: 2/3;
+      object-fit: cover;
+      display: block;
+      filter: sepia(8%) saturate(90%) contrast(1.02);
+    }
+
+    /* Film border effect */
+    .film-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 0 40px rgba(20, 10, 5, 0.28);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .film-caption {
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      padding: 0 4px;
+    }
+
+    /* ── SUBSCRIBE ── */
+    .subscribe {
+      padding: 96px 24px;
+      background-color: var(--cream);
+      text-align: center;
+    }
+
+    .subscribe-inner {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .subscribe h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(34px, 7vw, 52px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--dark-brown);
+      margin-bottom: 16px;
+    }
+
+    .subscribe h2 em {
+      font-style: italic;
+    }
+
+    .subscribe p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      line-height: 1.8;
+    }
+
+    .subscribe-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background-color: var(--dark-brown);
+      color: var(--warm-white);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 20px 48px;
+      border-radius: 2px;
+      width: 100%;
+      max-width: 340px;
+      transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+      box-shadow: 0 4px 24px rgba(61, 47, 36, 0.15);
+    }
+
+    .subscribe-btn:hover {
+      background-color: #4a3020;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(61, 47, 36, 0.22);
+    }
+
+    .subscribe-handle {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .subscribe-handle a {
+      color: var(--brown);
+      text-decoration: none;
+    }
+
+    .subscribe-handle a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 24px;
+      border-top: 1px solid var(--sand);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--dark-brown);
+      letter-spacing: 0.03em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--brown);
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: var(--sand);
+      margin-top: 4px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      max-width: 400px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--sand);
+    }
+
+    .divider span {
+      font-size: 18px;
+      opacity: 0.4;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .rubrics-grid {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+
+      .rubric-card {
+        padding: 36px 28px;
+      }
+
+      .film-frame {
+        width: clamp(220px, 75vw, 300px);
+      }
+
+      .subscribe-btn {
+        max-width: 100%;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .rubrics-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .film-frame {
+        width: clamp(300px, 26vw, 400px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Телеграм-канал</p>
+      <h1 class="hero-title">Жизнь<br><em>после</em><br>работы</h1>
+      <p class="hero-subtitle">рассказываю чем занимаюсь помимо работы</p>
+      <a href="https://t.me/life_after_job" class="hero-cta" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/>
+        </svg>
+        Подписаться
+      </a>
+    </div>
+    <div class="scroll-hint">листай</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <p>
+      Личный журнал о том, что происходит <em>после</em> восьми часов в офисе — выставки и случайные открытия, плёночные кадры, поездки и мысли, которые некуда деть
+    </p>
+  </section>
+
+  <!-- RUBRICS -->
+  <section class="rubrics">
+    <p class="section-label">рубрики</p>
+
+    <div class="divider"><span>✦</span></div>
+
+    <div class="rubrics-grid">
+      <div class="rubric-card" data-num="01">
+        <span class="rubric-icon">📷</span>
+        <h3 class="rubric-name">Плёночные&nbsp;фото</h3>
+        <p class="rubric-desc">Снимаю на плёнку — улицы, закаты, случайные кадры. Тихая медленная фотография</p>
+      </div>
+      <div class="rubric-card" data-num="02">
+        <span class="rubric-icon">🖼</span>
+        <h3 class="rubric-name">Выставки и мероприятия</h3>
+        <p class="rubric-desc">Хожу на выставки, лекции, в музеи. Делюсь тем, что зацепило</p>
+      </div>
+      <div class="rubric-card" data-num="03">
+        <span class="rubric-icon">✈️</span>
+        <h3 class="rubric-name">Путешествия</h3>
+        <p class="rubric-desc">Заметки из поездок — близких и дальних. Места, атмосфера, детали</p>
+      </div>
+      <div class="rubric-card" data-num="04">
+        <span class="rubric-icon">💭</span>
+        <h3 class="rubric-name">Забавные&nbsp;мысли</h3>
+        <p class="rubric-desc">То, что пришло в голову в метро или перед сном и не поместилось в никуда</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery">
+    <p class="section-label">плёночные кадры</p>
+    <div class="gallery-strip">
+      <div class="film-frame">
+        <img
+          src="telegram-cloud-photo-size-2-5429423985042067560-w.jpg"
+          alt="Закат над городом"
+          loading="lazy"
+        >
+        <p class="film-caption">Москва, закат</p>
+      </div>
+      <div class="film-frame">
+        <img
+          src="telegram-cloud-photo-size-2-5429423985042067565-w.jpg"
+          alt="Городская архитектура"
+          loading="lazy"
+        >
+        <p class="film-caption">Городские детали</p>
+      </div>
+      <div class="film-frame">
+        <img
+          src="telegram-cloud-photo-size-2-5429423985042067567-w.jpg"
+          alt="Московская улица"
+          loading="lazy"
+        >
+        <p class="film-caption">Улицы в сумерках</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBSCRIBE -->
+  <section class="subscribe">
+    <div class="subscribe-inner">
+      <h2>Приходи<br><em>читать</em></h2>
+      <p>Посты выходят без расписания — когда есть что сказать. Без спама, только живое</p>
+      <a href="https://t.me/life_after_job" class="subscribe-btn" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.941z"/>
+        </svg>
+        Подписаться в Telegram
+      </a>
+      <p class="subscribe-handle">
+        <a href="https://t.me/life_after_job" target="_blank" rel="noopener">@life_after_job</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Жизнь после работы</div>
+    <div class="footer-links">
+      <a href="https://t.me/life_after_job" target="_blank" rel="noopener">Telegram</a>
+    </div>
+    <p class="footer-copy">2026</p>
+  </footer>
+
+</body>
+</html>
